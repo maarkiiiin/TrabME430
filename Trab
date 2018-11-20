@@ -1,0 +1,104 @@
+#estimando n com base na fórmula n = (sigma^2)*(zalfa^2)/(B^2)
+#onde sigma^2 pode ser encontrado utilizando-se a população ou através de estudos anteriores
+#zalfa a partir do nível de significância imposto, e B um erro pré-estipulado.
+
+#Q1
+#compareceram no vestibular
+presentes <- subset(Fase1TipoQ, SIT2 == "P")
+
+s=0
+#100 simulaões
+for(h in 1:100){
+x = 0
+pop <- seq(1:length(presentes))
+pop
+## amostra com reposicao com reposição 
+amost <- sample(pop,size=3700,replace=TRUE)
+y <-sort(amost)
+#calculando a média amostral
+for (i in 1:length(y)) {
+  x = x + presentes$TOTAL[y[i]]
+}
+t<-round(x/length(y),2)
+#vetor com 100 médias amostrais
+s[h] = t 
+}
+#histograma 
+hist(s,main = "Pontuação Média", xlab="Pontos",
+     ylab="Frequência")
+#teste para verificar normalidade
+qqnorm(s)
+#shapiro test para normalidade
+shapiro.test(s)
+
+#Q2
+
+u = 0
+#100 simulaões
+for(o in 1:100){
+z=0
+
+popu <- seq(1:length(Fase1TipoQ))
+##Com reposição 
+amostra <- sample(popu,size=1675,replace=TRUE)
+w <-sort(amostra)
+#Calculo da proporção
+for(i in 1:length(w)){
+  if(X2017_quest$Q4[w[i]]==1){
+    z = z+1
+  }
+}
+l <- z/length(w)
+#vetor com as 100 simulações
+u[o] = l 
+}
+#histograma
+hist(u, main="Proporção de Inscritos com EM público", xlab="Proporção", ylab="Frequência")
+#teste para normalidade
+qqnorm(u)
+#teste shapiro para normalidade
+shapiro.test(u)
+
+#Q3
+v= 0
+#100 simulações
+for(c in 1:100){
+
+j=0
+popula <- seq(1:length(Fase1TipoQ))
+##Com reposição 
+amostraaa <- sample(popula,size=3560,replace=TRUE)
+k <-sort(amostraaa)
+#calculo da média total de quartos
+for(i in 1:length(k)){
+  if(X2017_quest$Q32C[k[i]]==1){
+    j = j+1
+  }
+  if(X2017_quest$Q32C[k[i]]==2){
+    j = j +2
+  }
+  if(X2017_quest$Q32C[k[i]]==3){
+    j = j +3
+  }
+  if(X2017_quest$Q32C[k[i]]==4){
+    j = j+4
+  }
+  if(X2017_quest$Q32C[k[i]]==5){
+    j = j
+  }
+}
+g <- j/length(k)
+#vetor com as 100 simulações
+v[c] = g
+}
+#histograma
+hist(v, main="Total de Quartos na Residência", xlab="Número de Quartos", ylab="Frequência")
+#teste para normalidade
+qqnorm(v, main="")
+#shapiro teste para normalidade
+shapiro.test(v)
+
+
+
+
+
